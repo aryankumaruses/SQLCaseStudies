@@ -17,12 +17,12 @@ select * from icc_world_cup;
 
 select distinct(Team_1) as Team_Name,
 		count(Team_1) as Matches_played,
-        sum(win_flag) as no_of_matches_won,
+        sum(win_flag) as no_of_matches_won,  -- the sum of win_flag from union with group by team_name gives the count of win matches 
         count(Team_1)-sum(win_flag) as no_of_matches_loose
 from(
-select Team_1, case when Team_1 = Winner then 1 else 0 end as win_flag
+select Team_1, case when Team_1 = Winner then 1 else 0 end as win_flag  -- Here win flag identifies winner from Team_1
 from icc_world_cup
 union all 
-select Team_2, case when Team_2= Winner then 1 else 0 end as win_flag
+select Team_2, case when Team_2= Winner then 1 else 0 end as win_flag  -- Here win flag identifies winner from Team_2
 from icc_world_cup) as subquery
 group by Team_1;
